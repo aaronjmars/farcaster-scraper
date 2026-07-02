@@ -1,10 +1,13 @@
-import { FeedType, FilterType } from "@neynar/nodejs-sdk";
+import {
+  FetchFeedFeedTypeEnum,
+  FetchFeedFilterTypeEnum,
+} from "@neynar/nodejs-sdk/build/api/index.js";
 import { getClient } from "./client.js";
 
 function isCastValid(cast, likeThreshold, recastThreshold, followerCountThreshold) {
   return (
-    (cast.reactions.likes.length > likeThreshold ||
-      cast.reactions.recasts.length > recastThreshold) &&
+    (cast.reactions.likes_count > likeThreshold ||
+      cast.reactions.recasts_count > recastThreshold) &&
     cast.author.follower_count > followerCountThreshold
   );
 }
@@ -27,8 +30,9 @@ async function fetchCasts({
   let queryCount = 0;
 
   do {
-    const { casts, next } = await client.fetchFeed(FeedType.Filter, {
-      filterType: FilterType.ChannelId,
+    const { casts, next } = await client.fetchFeed({
+      feedType: FetchFeedFeedTypeEnum.Filter,
+      filterType: FetchFeedFilterTypeEnum.ChannelId,
       channelId: channelId,
       withRecasts: true,
       withReplies: false,
