@@ -24,7 +24,7 @@
   "dependencies": {
     "@clack/prompts": "^0.7.0",
     "@neynar/nodejs-sdk": "^1.9.4",
-    "dotenv": "^16.4.1",
+    "dotenv": "^17.4.2",
     "yargs": "^17.7.2"
   }
 }
