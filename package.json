@@ -22,7 +22,7 @@
   "homepage": "https://github.com/leo5imon/farcaster-scraper",
   "license": "ISC",
   "dependencies": {
-    "@clack/prompts": "^0.7.0",
+    "@clack/prompts": "^1.6.0",
     "@neynar/nodejs-sdk": "^1.9.4",
     "dotenv": "^17.4.2",
     "yargs": "^18.0.0"
