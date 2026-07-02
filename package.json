@@ -25,6 +25,6 @@
     "@clack/prompts": "^0.7.0",
     "@neynar/nodejs-sdk": "^1.9.4",
     "dotenv": "^17.4.2",
-    "yargs": "^17.7.2"
+    "yargs": "^18.0.0"
   }
 }
