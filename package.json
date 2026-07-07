@@ -26,5 +26,8 @@
     "@neynar/nodejs-sdk": "^3.177.0",
     "dotenv": "^17.4.2",
     "yargs": "^18.0.0"
+  },
+  "overrides": {
+    "ws": "^8.21.0"
   }
 }
