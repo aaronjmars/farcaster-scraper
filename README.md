@@ -48,3 +48,7 @@ Thank you for considering contributing to Farcaster Scraper. Your efforts help m
 ---
 
 Happy Scraping! 🎉 Dive into Farcaster content like never before with **Farcaster Scraper**.
+
+---
+
+Built by [Aaron Elijah Mars](https://aaronjmars.com), founder of Aeon and MiroShark · [@aaronjmars](https://github.com/aaronjmars)
