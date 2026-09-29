@@ -56,10 +56,26 @@ async function fetchCasts({
     (!maxQueries || queryCount < maxQueries)
   );
 
-  return allResults;
+  return maxResults ? allResults.slice(0, maxResults) : allResults;
+}
+
+export function logResults(urls) {
+  const uniqueResults = [...new Set(urls)];
+  if (uniqueResults.length === 0) {
+    console.error(
+      "No matching URLs found. Try lowering the thresholds or widening the domain filter."
+    );
+    return;
+  }
+  uniqueResults.forEach((url) => console.log(url));
 }
 
 export async function fetchCastsHandler(argv) {
+  if (!process.env.NEYNAR_API_KEY) {
+    console.error("Missing NEYNAR_API_KEY. Add it to your .env file (see .env.example).");
+    process.exitCode = 1;
+    return;
+  }
   try {
     const results = await fetchCasts({
       apiKey: process.env.NEYNAR_API_KEY,
@@ -73,9 +89,13 @@ export async function fetchCastsHandler(argv) {
       maxQueries: argv.maxQueries,
     });
 
-    const uniqueResults = [...new Set(results)];
-    uniqueResults.forEach((url) => console.log(url));
+    logResults(results);
   } catch (err) {
-    console.error(err);
+    // Print a one-line message: the raw Axios error dumps config and stack.
+    console.error(`Fetch failed: ${err?.response?.data?.message ?? err.message}`);
+    if ([401, 402, 403].includes(err?.response?.status)) {
+      console.error("Verify your Neynar API key and plan.");
+    }
+    process.exitCode = 1;
   }
 }

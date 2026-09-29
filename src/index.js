@@ -5,7 +5,9 @@ import { hideBin } from "yargs/helpers";
 import { fetchCastsHandler } from "./commands.js";
 
 yargs(hideBin(process.argv))
-  .version(false)
+  .scriptName("farcaster-scraper")
+  .recommendCommands()
+  .strict()
   .command({
     command: "fetch",
     describe: "Fetch Imgur URLs from Neynar API based on criteria",
@@ -32,7 +34,7 @@ yargs(hideBin(process.argv))
       },
       limit: {
         default: 100,
-        describe: "Fetch limit",
+        describe: "Fetch limit (capped at 100 by the Neynar API)",
         type: "number",
         coerce: (limit) => Math.min(limit, 100),
       },
@@ -53,4 +55,14 @@ yargs(hideBin(process.argv))
     handler: fetchCastsHandler,
   })
   .demandCommand(1, "You must provide at least one command to execute")
+  .check((argv) => {
+    for (const opt of ["limit", "maxResults", "maxQueries"]) {
+      const value = argv[opt];
+      if (value !== undefined && (!Number.isFinite(value) || value <= 0)) {
+        throw new Error(`--${opt} must be a positive number`);
+      }
+    }
+    return true;
+  })
+  .showHelpOnFail(true)
   .help().argv;
