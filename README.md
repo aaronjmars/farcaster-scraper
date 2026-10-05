@@ -5,7 +5,7 @@ Welcome to the **Farcaster Scraper**! This powerful CLI tool leverages the Neyna
 ## ✨ Features
 
 - **Comprehensive Fetching:** Retrieve all posted content from your favorite Farcaster channels with ease.
-- **Interactive Filtering:** Use likes, recasts, and follower counts to filter content, ensuring you only get the best.
+- **Filtering:** Use likes, recasts, and follower counts to filter content, ensuring you only get the best.
 - **Targeted Searches:** Specifically filter for images or URLs hosted on `imgur.com`, or customize it to your preference.
 
 ## 🚀 Installation
@@ -13,12 +13,13 @@ Welcome to the **Farcaster Scraper**! This powerful CLI tool leverages the Neyna
 Embark on your Farcaster scraping adventure with these simple steps:
 
 ```bash
-git clone https://github.com/leo5imon/farcaster-scraper.git
+git clone https://github.com/aaronjmars/farcaster-scraper.git
 cd farcaster-scraper
 npm install
+cp .env.example .env   # then set NEYNAR_API_KEY
 ```
 
-Don't forget to secure your Neynar API key and set it up in your `.env` file for seamless access.
+The only config is `NEYNAR_API_KEY` (get one from [Neynar](https://neynar.com)). It is read from `.env` or your shell.
 
 ## 📚 How to Use
 
@@ -28,7 +29,24 @@ Once installed, dive into the world of Farcaster content by executing the `fetch
 node src/index.js fetch --channelId="yourFavoriteChannel" --likeThreshold=50 --limit=100
 ```
 
-Tailor your search with parameters like `likeThreshold`, `recastThreshold`, `followerCountThreshold`, and more to find exactly what you're looking for.
+Tailor your search with these options:
+
+| Option | Default | What it does |
+|---|---|---|
+| `--channelId` | `memes` | Farcaster channel to read |
+| `--likeThreshold` | `30` | Keep casts with more likes than this... |
+| `--recastThreshold` | `15` | ...or more recasts than this |
+| `--followerCountThreshold` | `20` | Author must have more followers than this |
+| `--limit` | `100` | Casts per API page (max 100) |
+| `--urlDomainFilter` | `imgur.com` | Only keep embed URLs containing this text |
+| `--maxResults` | none | Stop after this many URLs |
+| `--maxQueries` | none | Stop after this many API pages (with neither limit set, it reads until the feed ends) |
+
+The tool pages through the channel feed (replies excluded), keeps casts that pass the thresholds, and prints each matching embed URL once per line, so you can pipe it to a file:
+
+```bash
+node src/index.js fetch --channelId=memes --maxQueries=10 > urls.txt
+```
 
 (for more information, run `node src/index.js fetch --help`)
 
