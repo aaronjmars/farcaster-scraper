@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/leo5imon/farcaster-scraper"
+    "url": "https://github.com/aaronjmars/farcaster-scraper"
   },
   "keywords": [
     "react",
@@ -18,8 +18,8 @@
     "farcaster kit"
   ],
   "type": "module",
-  "author": "leo5imon",
-  "homepage": "https://github.com/leo5imon/farcaster-scraper",
+  "author": "Aaron Elijah Mars",
+  "homepage": "https://github.com/aaronjmars/farcaster-scraper",
   "license": "ISC",
   "dependencies": {
     "@clack/prompts": "^1.6.0",
